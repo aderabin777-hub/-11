@@ -17,14 +17,3 @@ send_reg.addEventListener('click', () => { // перехватываем соб�
 
     tg.close(); // закрываем веб-приложение
 })
-
-class WebAppDataFilter(Filter):
-
-   async def __call__(self, message: types.Message, **kwargs) -> Union[bool, Dict[str, Any]]:
-       return dict(web_app_data=message.web_app_data) if message.web_app_data else False
-
-@dp.message(WebAppDataFilter())
-async def web_app_handler(message: types.Message):
-   res = json.loads(message.web_app_data.data)
-
-   await message.answer(f'ФИО: {res["data_name"]}\nEmail: {res["data_email"]}\nТелефон: {res["data_tel"]}')
